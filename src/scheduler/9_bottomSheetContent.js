@@ -12,7 +12,7 @@ const BottomSheetContent = (props) =>{
     const [title, setTitle] = useState('');
     const [detail, setDetail] = useState('');
 
-    const {setIsOpen, scheduleList, setScheduleList, date} = props;
+    const {setIsOpen, scheduleList, setScheduleList, date, setBgState} = props;
 
     const onAdd = ()=>{
         //유효성 검사
@@ -42,6 +42,9 @@ const BottomSheetContent = (props) =>{
             sTime:sTime.format('HH:mm'),
             eTime:eTime.format('HH:mm'), 
             isComplete:false,
+            marked:true,
+            month:date.format('MM'),
+            day:date.format('DD'),
         }
         //원본하고 완전히 동일한 스캐줄리스트 생성
         const cpy = JSON.parse(JSON.stringify(scheduleList));
@@ -62,7 +65,7 @@ const BottomSheetContent = (props) =>{
 
     return(
         <ContentWrap>
-            <BottomSheetHeader setIsOpen={setIsOpen}/>
+            <BottomSheetHeader setIsOpen={setIsOpen} setBgState={setBgState}/>
             <BodyWrap>
                 <TimeZone>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -115,6 +118,12 @@ const ContentWrap = styled.div`
     flex-direction: column;
     justify-content: space-between;
     padding: 0 40px 50px;
+
+    @media screen and (max-width:768px) {
+        bottom: 0;
+        position: absolute;
+        width: 90%;
+    }
 `;
 
 const BodyWrap = styled.div`
@@ -122,6 +131,10 @@ const BodyWrap = styled.div`
     flex-wrap: wrap;
     height: 70%;
     margin: 50px 0px;
+
+    @media screen and (max-width:768px) {
+        margin: 0px;
+    }
 `;
 
 const TimeZone = styled.div`
@@ -136,6 +149,7 @@ const TimeZone = styled.div`
     @media screen and (max-width:768px) {
         width: 100%;
         border: none;
+        margin-top: 10px;
     }
 `;
 
@@ -147,5 +161,10 @@ const TextZone = styled.div`
     row-gap: 40px;
     border-left: 3px dotted #e9e9e9;
     align-self: flex-start;
+
+    @media screen and (max-width:768px) {
+        border-left: unset;
+        padding: 0px 30px 30px 30px;
+    }
 `;
 

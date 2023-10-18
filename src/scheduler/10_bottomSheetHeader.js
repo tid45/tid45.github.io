@@ -1,10 +1,13 @@
 import styled from "styled-components";
 
-const BottomSheetHeader = ({setIsOpen})=>{
+const BottomSheetHeader = (props)=>{
+
+    const {setIsOpen, setBgState} = props;
+
     return(
         <HeaderWrap>
-            <MyIcon onClick={()=>{setIsOpen(false)}}>X</MyIcon>
-            <h2>{}일정 추가하기</h2>
+            <MyIcon onClick={()=>{setIsOpen(false); setBgState(false)}}>X</MyIcon>
+            <h2>일정 추가하기</h2>
         </HeaderWrap>
     );
 }

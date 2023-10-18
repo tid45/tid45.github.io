@@ -2,7 +2,7 @@ import styled from "styled-components";
 import BottomSheetContent from "./9_bottomSheetContent";
 
 const BottomSheet = (props) =>{
-    const {isOpen, setIsOpen, scheduleList, setScheduleList, date} = props;
+    const {isOpen, setIsOpen, scheduleList, setScheduleList, date, setBgState} = props;
     return(
         <BottomSheetWrap isOpen={isOpen}>
             <BottomSheetContent 
@@ -10,6 +10,7 @@ const BottomSheet = (props) =>{
                 scheduleList={scheduleList}
                 setScheduleList={setScheduleList}
                 date={date}
+                setBgState={setBgState}
             />
         </BottomSheetWrap>
     );
@@ -28,4 +29,6 @@ const BottomSheetWrap = styled.div`
     display: ${({isOpen})=>isOpen || 'none'};
     justify-content: center;
     align-items: center;
+
+
 `;

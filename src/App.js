@@ -9,10 +9,15 @@ const GlobalStyle = createGlobalStyle`
   }
   body {
     background-color: #fafafb;
+
   }
 `;
 
+
 function App() {
+  
+  
+
   return (
     <>
       <GlobalStyle/>

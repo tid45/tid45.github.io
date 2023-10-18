@@ -1,8 +1,15 @@
 import styled from "styled-components";
 import SchedulerListCard from "./6_schedulerListCard";
 import AddIcon from '@mui/icons-material/Add';
-import { DateCalendar, LocalizationProvider } from "@mui/x-date-pickers";
+import { DateCalendar, LocalizationProvider, PickersDay } from "@mui/x-date-pickers";
 import {AdapterDayjs} from '@mui/x-date-pickers/AdapterDayjs';
+
+import { useEffect, useState } from "react";
+import React from "react";
+
+
+
+
 
 // 논리 처리(날짜와 스케줄리스트를 받아서 해당 날짜의 스케줄
 // 들이 들어있있는 ListCard를 return 해주는 함수)
@@ -26,13 +33,16 @@ const getListCards = (date, scheduleList, f, f2)=>{
             eTime={v.eTime}  
             onClick={()=>{f(v.id)}} 
             onXClick={()=>{f2(v.id)}}
+            marked={true}
+            // month={date.format('MM')}
+            // day={date.format('DD')}
         />
     );
 
 }
 
 const SchedulerContent = (props) =>{
-    const {setIsOpen, date, scheduleList, scheduleCnt, completeCnt, setScheduleList, setDate} = props;
+    const {setIsOpen, date, scheduleList, scheduleCnt, completeCnt, setScheduleList, setDate, setBgState} = props;
 
     const onCompleteClick = (id)=>{
         
@@ -61,19 +71,47 @@ const SchedulerContent = (props) =>{
         });
     }
 
-    const listCards = getListCards(date, scheduleList, onCompleteClick, onXClick);
     
+
+    const listCards = getListCards(date, scheduleList, onCompleteClick, onXClick);
+
+
+
+
+
+    // const [ dateDataList, setDateDataList ] = useState([]);
+
+    // specificCalender.forEach(function(node, idx) {
+    //     node.classList.add('fuckthisShit');
+    // });
+
+    // console.log('scheduleList', scheduleList);
+    // console.log('wholeDate', wholeDate);
+
+    // function mapTryOne() {
+    //     scheduleList.map((n)=> console.log(n));
+    //  }  
+    
+
+
+
+    
+    
+
 
     return(
         <SchedulerContentFlex>
-        <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DateCalendar className="BigCalender" value={date} onChange={(newValue) =>{setDate(newValue)}}></DateCalendar>
-        </LocalizationProvider>
+            <div className="BigCalender">                
+                <LocalizationProvider dateAdapter={AdapterDayjs}>
+                    <DateCalendar value={date} onChange={(newValue) =>{setDate(newValue)}} >
+                    </DateCalendar>
+                </LocalizationProvider>
+            </div>
         <SchedulerContentWrap>
             <SchedulerHeader>
                 <h2>{date.format('YYYY년 MM월 DD일 ')}스케줄</h2>
                 <p>총 {scheduleCnt}개 항목 중 {completeCnt}개 완료!</p>
-                <button onClick={()=>{setIsOpen('flex')}}><AddIcon/></button>
+                <button onClick={()=>{setIsOpen('flex'); setBgState(true)}}><AddIcon/></button>
             </SchedulerHeader>
             {listCards}
         </SchedulerContentWrap>
@@ -91,8 +129,27 @@ const SchedulerContentFlex = styled.div`
     .BigCalender {
         display: contents;
 
+        .sheduleExist::after{
+            content: "⋄";
+            position: absolute;
+            top: -13px;
+            right: 10px;
+            font-size: 30px;
+            color: #ebcdc1;
+        }
+
+        @media screen and (max-width:768px) {
+            display: none;
+        }
+
         .css-flbe84-MuiDayCalendar-weekContainer {
             margin: 0px;
+
+            .MuiPickersDay-root {
+                @media screen and (max-width:768px) {
+                    height: 56px;
+                }
+            }
         }
 
         .MuiPickersCalendarHeader-labelContainer {
@@ -106,17 +163,19 @@ const SchedulerContentFlex = styled.div`
     }
 
     .css-1hiwve1-MuiButtonBase-root-MuiPickersDay-root {
-        background-color: rgb(199, 199, 199) !important;
+        background-color: rgb(253 245 242) !important;
         color: black !important;
     }
 
     .MuiButtonBase-root {
         margin: 0px;
         padding: 0px 2px;
+        font-size: 1rem;
     }
 
     & .MuiDateCalendar-root {
         width: 100%;
+        min-height: 498px;
 
         & .MuiPickersFadeTransitionGroup-root div div .MuiDayCalendar-header span {
             width: 100%;
@@ -132,7 +191,7 @@ const SchedulerContentFlex = styled.div`
 
         .Mui-selected {
             border-radius: 0px;
-            background-color: rgb(247, 247, 247) !important;
+            background-color: rgb(253, 253, 253) !important;
             color: black !important;
         }
 
@@ -154,7 +213,7 @@ const SchedulerContentWrap = styled.div`
     display: flex;
     flex-direction: column;
     flex-grow: 1;
-    overflow-y: scroll;
+    /* overflow-y: scroll; */
     padding: 25px 20px;
     row-gap: 20px;
     margin-top: 50px;
@@ -173,7 +232,7 @@ const SchedulerContentWrap = styled.div`
 const SchedulerHeader = styled.div`
     border-bottom: 3px solid #e9e9e9;
     
-    position: sticky; //relative 자동적용
+    /* position: sticky; //relative 자동적용 */
     /* z-index: 1; */
     background-color: white;
     

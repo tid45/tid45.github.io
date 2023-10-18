@@ -26,7 +26,7 @@ export default SchedulerListCard;
 const ListCardWrap = styled.div`
     background-color: white;
     width: 90%;
-    border: 3px solid lightblue;
+    border: 3px solid #fdf5f2;
     border-radius: 10px;
     padding: 10px;
     cursor: pointer;
@@ -44,8 +44,8 @@ const ListCardWrap = styled.div`
             borderColor: '#e9e9e9',
 
             '&::after': {
-                content: '"♥completed!!"',
-                color: 'green',
+                content: '"♥ completed!!"',
+                color: '#cb927d',
                 position: 'absolute',
                 right: '5px',
                 top: '0'
@@ -58,7 +58,7 @@ const ListCardWrap = styled.div`
             boxShadow: '2px 3px 4px rgba(0,0,0,0.1)',
             '&:hover':{
                 transform: 'scale(1.05)',
-                backgroundColor: 'lightblue'
+                backgroundColor: '#fdf5f2'
             }
         }
     }
